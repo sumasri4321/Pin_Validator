@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Secure PIN Validator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    input[type="password"], input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      width: 200px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      background: #007bff;
+      color: #fff;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    .message {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    .error { color: red; }
+    .success { color: green; }
+    .toggle {
+      margin-top: 5px;
+      font-size: 12px;
+      cursor: pointer;
+      color: #007bff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>4-Digit PIN Validator</h2>
+    <input type="password" id="pin" maxlength="4" placeholder="Enter 4-digit PIN" />
+    <div class="toggle" onclick="togglePIN()">Show/Hide PIN</div>
+    <div class="message" id="msg"></div>
+    <button id="submitBtn" disabled>Submit</button>
+  </div>
+
+  <script>
+    const pinInput = document.getElementById('pin');
+    const msg = document.getElementById('msg');
+    const btn = document.getElementById('submitBtn');
+
+    pinInput.addEventListener('input', () => {
+      const pin = pinInput.value;
+      if (!/^\d*$/.test(pin)) {
+        msg.textContent = "Only numeric digits allowed.";
+        msg.className = "message error";
+        btn.disabled = true;
+      } else if (pin.length < 4) {
+        msg.textContent = "PIN must be 4 digits.";
+        msg.className = "message error";
+        btn.disabled = true;
+      } else if (pin.length > 4) {
+        msg.textContent = "PIN cannot exceed 4 digits.";
+        msg.className = "message error";
+        btn.disabled = true;
+      } else {
+        msg.textContent = "Valid PIN!";
+        msg.className = "message success";
+        btn.disabled = false;
+      }
+    });
+
+    function togglePIN() {
+      pinInput.type = pinInput.type === 'password' ? 'text' : 'password';
+    }
+  </script>
+</body>
+</html>
